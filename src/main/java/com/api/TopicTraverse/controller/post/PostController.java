@@ -6,11 +6,14 @@ import com.api.TopicTraverse.request.PostWrite;
 import com.api.TopicTraverse.response.post.PostGet;
 import com.api.TopicTraverse.service.post.PostService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class PostController {
@@ -19,6 +22,7 @@ public class PostController {
 
     @PostMapping("/post")
     public void write(@RequestBody @Valid PostWrite postWrite) {
+
 
         postService.postCreate(postWrite);
 

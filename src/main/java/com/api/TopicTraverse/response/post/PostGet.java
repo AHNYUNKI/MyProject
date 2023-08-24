@@ -43,6 +43,7 @@ public class PostGet {
 
     public static PostGet toGet(Post post) {
         return PostGet.builder()
+                .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .hit(post.getHit())

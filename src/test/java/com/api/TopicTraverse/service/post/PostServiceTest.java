@@ -6,6 +6,7 @@ import com.api.TopicTraverse.request.PostEdit;
 import com.api.TopicTraverse.request.PostPage;
 import com.api.TopicTraverse.request.PostWrite;
 import com.api.TopicTraverse.response.post.PostGet;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ class PostServiceTest {
 
     @Autowired
     private PostRepository postRepository;
+
+    @BeforeEach
+    void clean() {
+        postRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("게시글 작성")

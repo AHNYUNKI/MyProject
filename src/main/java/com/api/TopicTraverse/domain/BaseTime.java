@@ -16,11 +16,11 @@ import java.time.LocalDateTime;
 public class BaseTime {
 
     @CreationTimestamp
-    @Column(insertable = false)
+    @Column(updatable = false)
     private LocalDateTime createTime;
 
     @UpdateTimestamp
-    @Column(updatable = false)
+    @Column(insertable = false)
     private LocalDateTime updateTime;
 
 }

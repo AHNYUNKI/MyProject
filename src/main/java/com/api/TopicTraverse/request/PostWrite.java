@@ -1,14 +1,11 @@
 package com.api.TopicTraverse.request;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
 @Getter
 public class PostWrite {
 
@@ -23,4 +20,5 @@ public class PostWrite {
         this.title = title;
         this.content = content;
     }
+
 }
