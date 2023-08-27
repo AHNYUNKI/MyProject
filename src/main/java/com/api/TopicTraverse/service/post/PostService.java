@@ -48,6 +48,7 @@ public class PostService {
     }
 
     public List<PostGet> getList(PostPage postPage) {
+
         return postRepository.getList(postPage).stream()
                 .map(PostGet::new)
                 .collect(Collectors.toList());
@@ -55,15 +56,10 @@ public class PostService {
 
     @Transactional
     public void postEdit(Long postId, PostEdit postEdit) {
-        Post postGet = postRepository.findById(postId).orElseThrow(PostNotFound::new);
+        Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
 
-        Post post = Post.builder()
-                .id(postGet.getId())
-                .title(postEdit.getTitle())
-                .content(postEdit.getContent())
-                .build();
+        post.edit(postEdit.getTitle(), postEdit.getContent());
 
-        postRepository.save(post);
     }
 
     public void postDelete(Long postId) {

@@ -41,4 +41,8 @@ public class Post extends BaseTime {
     }
 
 
+    public void edit(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

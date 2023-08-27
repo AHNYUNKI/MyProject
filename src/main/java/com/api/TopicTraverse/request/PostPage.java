@@ -22,7 +22,4 @@ public class PostPage {
     public long getOffset() {
         return (long) (max(1, page) - 1) * min(size, MAX_SIZE);
     }
-
-
-
 }
