@@ -37,7 +37,7 @@ public class PostService {
 
     public PostGet postGet(Long postId) {
 
-        Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
+        Post post = postRepository.findById(postId).orElseThrow();
 
         post.hitPlus();
 
@@ -48,6 +48,7 @@ public class PostService {
     }
 
     public List<PostGet> getList(PostPage postPage) {
+
 
         return postRepository.getList(postPage).stream()
                 .map(PostGet::new)
