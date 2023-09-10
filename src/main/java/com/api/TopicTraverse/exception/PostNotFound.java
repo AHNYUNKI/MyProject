@@ -3,7 +3,7 @@ package com.api.TopicTraverse.exception;
 import lombok.Getter;
 
 @Getter
-public class PostNotFound extends PostException{
+public class PostNotFound extends TopicTraverseException {
 
     private static final String MESSAGE = "존재하지 않는 글 입니다.";
 

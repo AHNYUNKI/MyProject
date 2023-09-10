@@ -1,6 +1,7 @@
 package com.api.TopicTraverse.domain.post;
 
 import com.api.TopicTraverse.domain.BaseTime;
+import com.api.TopicTraverse.domain.member.Member;
 import com.api.TopicTraverse.request.PostEdit;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import static javax.persistence.FetchType.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -23,6 +26,10 @@ public class Post extends BaseTime {
     private String content;
 
     private int hit;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Builder
     public Post(Long id, String title, String content, int hit) {

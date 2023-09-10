@@ -1,7 +1,6 @@
 package com.api.TopicTraverse.service.post;
 
 import com.api.TopicTraverse.domain.post.Post;
-import com.api.TopicTraverse.exception.PostException;
 import com.api.TopicTraverse.exception.PostNotFound;
 import com.api.TopicTraverse.repository.post.PostRepository;
 import com.api.TopicTraverse.request.PostEdit;

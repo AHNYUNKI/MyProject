@@ -43,6 +43,9 @@ public class PostController {
 
     @PatchMapping("/post/{postId}")
     public void edit(@PathVariable Long postId, @RequestBody @Valid PostEdit postEdit) {
+        System.out.println("Received postId: " + postId);
+        System.out.println("Received postEdit: " + postEdit);
+
         postService.postEdit(postId, postEdit);
     }
 

@@ -3,7 +3,7 @@ package com.api.TopicTraverse.exception;
 import lombok.Getter;
 
 @Getter
-public class InvalidRequest extends PostException {
+public class InvalidRequest extends TopicTraverseException {
 
     private static final String MESSAGE = "잘못된 요청입니다.";
 
