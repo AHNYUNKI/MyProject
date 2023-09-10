@@ -1,14 +1,25 @@
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/myProject
+#    username: root
+#    password:
+
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/myProject
-    username: root
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:project
+    username: sa
     password:
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: none  # DDL?? ??
+      ddl-auto: create  # DDL?? ??
     properties:
       hibernate:
         show_sql: true
