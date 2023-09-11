@@ -5,8 +5,8 @@ import com.api.TopicTraverse.config.handler.Http401Handler;
 import com.api.TopicTraverse.config.handler.Http403Handler;
 import com.api.TopicTraverse.config.handler.LoginFailHandler;
 import com.api.TopicTraverse.config.handler.LoginSuccessHandler;
-import com.api.TopicTraverse.domain.member.Member;
-import com.api.TopicTraverse.repository.member.MemberRepository;
+import com.api.TopicTraverse.domain.user.User;
+import com.api.TopicTraverse.repository.member.UserRepnsitory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +18,18 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @Slf4j
 @Configuration
@@ -36,10 +40,11 @@ public class SecurityConfig {
 
     private final ObjectMapper objectMapper;
 
-    private final MemberRepository memberRepository;
+    private final UserRepnsitory userRepnsitory;
+
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests()
                 .anyRequest().permitAll()
@@ -69,7 +74,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService(memberRepository));
+        provider.setUserDetailsService(userDetailsService(userRepnsitory));
         provider.setPasswordEncoder(passwordEncoder());
 
         return new ProviderManager(provider);
@@ -77,22 +82,17 @@ public class SecurityConfig {
 
 
     @Bean
-    public UserDetailsService userDetailsService(MemberRepository memberRepository) {
+    public UserDetailsService userDetailsService(UserRepnsitory userRepnsitory) {
         return username -> {
-            Member member = memberRepository.findByEmail(username)
+            User user = userRepnsitory.findByEmail(username)
                     .orElseThrow(() -> new UsernameNotFoundException(username + " 을 찾을 수 없습니다."));
 
-            return new UserPrincipal(member);
+            return new UserPrincipal(user);
         };
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new SCryptPasswordEncoder(
-                16,
-                8,
-                1,
-                32,
-                64);
+        return new BCryptPasswordEncoder();
     }
 }

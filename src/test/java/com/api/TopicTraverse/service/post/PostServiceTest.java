@@ -1,10 +1,13 @@
 package com.api.TopicTraverse.service.post;
 
 import com.api.TopicTraverse.domain.post.Post;
+import com.api.TopicTraverse.domain.user.Role;
+import com.api.TopicTraverse.domain.user.User;
+import com.api.TopicTraverse.repository.member.UserRepnsitory;
 import com.api.TopicTraverse.repository.post.PostRepository;
-import com.api.TopicTraverse.request.PostEdit;
-import com.api.TopicTraverse.request.PostPage;
-import com.api.TopicTraverse.request.PostWrite;
+import com.api.TopicTraverse.request.post.PostEditor;
+import com.api.TopicTraverse.request.post.PostPage;
+import com.api.TopicTraverse.request.post.PostWrite;
 import com.api.TopicTraverse.response.post.PostGet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,22 +30,35 @@ class PostServiceTest {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private UserRepnsitory userRepnsitory;
+
     @BeforeEach
     void clean() {
         postRepository.deleteAll();
+        userRepnsitory.deleteAll();
     }
 
     @Test
     @DisplayName("게시글 작성")
     public void test1() {
         // given
+        User user = User.builder()
+                .name("userA")
+                .password("1111")
+                .email("userA@gmail.com")
+                .role(Role.USER)
+                .build();
+
+        userRepnsitory.save(user);
+
         PostWrite postWrite = PostWrite.builder()
                 .title("제목입니다.")
                 .content("내용입니다.")
                 .build();
 
         // when
-        postService.postCreate(postWrite);
+        postService.postCreate(user.getId(), postWrite);
 
 
         // then
@@ -110,13 +126,13 @@ class PostServiceTest {
 
         postRepository.save(postRequest);
 
-        PostEdit postEdit = PostEdit.builder()
+        PostEditor postEditor = PostEditor.builder()
                 .title("제목_수정입니다.")
                 .content("내용_수정입니다.")
                 .build();
 
         // when
-        postService.postEdit(postRequest.getId(), postEdit);
+        postService.postEdit(postRequest.getId(), postEditor);
 
         // then
         Post post = postRepository.findAll().get(0);

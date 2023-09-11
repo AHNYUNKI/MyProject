@@ -1,25 +1,25 @@
-#spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/myProject
-#    username: root
-#    password:
-
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:project
-    username: sa
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/myProject
+    username: root
     password:
-  h2:
-    console:
-      path: /h2-console
-      enabled: true
+
+#spring:
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:project
+#    username: sa
+#    password:
+#  h2:
+#    console:
+#      path: /h2-console
+#      enabled: true
 
 
   jpa:
     hibernate:
-      ddl-auto: create  # DDL?? ??
+      ddl-auto: create
     properties:
       hibernate:
         show_sql: true

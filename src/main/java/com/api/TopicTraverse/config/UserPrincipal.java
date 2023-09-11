@@ -1,26 +1,23 @@
 package com.api.TopicTraverse.config;
 
-import com.api.TopicTraverse.domain.member.Member;
-import org.springframework.security.core.GrantedAuthority;
+import com.api.TopicTraverse.domain.user.User;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
-import java.util.Collection;
 import java.util.List;
 
-public class UserPrincipal extends User {
+public class UserPrincipal extends org.springframework.security.core.userdetails.User {
 
-    private final Long memberId;
+    private final Long userId;
 
-    public UserPrincipal(Member member) {
-        super(member.getEmail(), member.getPassword(), List.of(
-                new SimpleGrantedAuthority("ROLE_ADMIN")
+    public UserPrincipal(User user) {
+        super(user.getEmail(), user.getPassword(), List.of(
+                new SimpleGrantedAuthority("ROLE_USER")
         ));
-        this.memberId = member.getId();
+        this.userId = user.getId();
     }
 
-    public Long getMemberId() {
-        return memberId;
+    public Long getUserId() {
+        return userId;
     }
 
 }

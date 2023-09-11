@@ -2,7 +2,7 @@ package com.api.TopicTraverse.repository.post;
 
 import com.api.TopicTraverse.domain.post.Post;
 import com.api.TopicTraverse.domain.post.QPost;
-import com.api.TopicTraverse.request.PostPage;
+import com.api.TopicTraverse.request.post.PostPage;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 

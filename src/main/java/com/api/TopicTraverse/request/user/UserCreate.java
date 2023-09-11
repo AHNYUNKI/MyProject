@@ -1,12 +1,13 @@
-package com.api.TopicTraverse.request.member;
+package com.api.TopicTraverse.request.user;
 
+import com.api.TopicTraverse.domain.user.Role;
 import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 
 @Getter
-public class MemberSave {
+public class UserCreate {
 
     @NotBlank(message = "이메일은 필수입니다.")
     private final String email;
@@ -18,7 +19,7 @@ public class MemberSave {
     private final String name;
 
     @Builder
-    public MemberSave(String email, String password, String name) {
+    public UserCreate(String email, String password, String name) {
         this.email = email;
         this.password = password;
         this.name = name;

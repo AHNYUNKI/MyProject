@@ -1,4 +1,4 @@
-package com.api.TopicTraverse.request;
+package com.api.TopicTraverse.request.post;
 
 import lombok.*;
 

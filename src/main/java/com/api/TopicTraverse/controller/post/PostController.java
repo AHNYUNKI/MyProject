@@ -1,13 +1,14 @@
 package com.api.TopicTraverse.controller.post;
 
-import com.api.TopicTraverse.request.PostEdit;
-import com.api.TopicTraverse.request.PostPage;
-import com.api.TopicTraverse.request.PostWrite;
+import com.api.TopicTraverse.config.UserPrincipal;
+import com.api.TopicTraverse.request.post.PostEditor;
+import com.api.TopicTraverse.request.post.PostPage;
+import com.api.TopicTraverse.request.post.PostWrite;
 import com.api.TopicTraverse.response.post.PostGet;
 import com.api.TopicTraverse.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,10 +22,10 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/post")
-    public void write(@RequestBody @Valid PostWrite postWrite) {
+    public void write(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody @Valid PostWrite postWrite) {
 
 
-        postService.postCreate(postWrite);
+        postService.postCreate(userPrincipal.getUserId(), postWrite);
 
     }
 
@@ -42,11 +43,11 @@ public class PostController {
     }
 
     @PatchMapping("/post/{postId}")
-    public void edit(@PathVariable Long postId, @RequestBody @Valid PostEdit postEdit) {
+    public void edit(@PathVariable Long postId, @RequestBody @Valid PostEditor postEditor) {
         System.out.println("Received postId: " + postId);
-        System.out.println("Received postEdit: " + postEdit);
+        System.out.println("Received postEditor: " + postEditor);
 
-        postService.postEdit(postId, postEdit);
+        postService.postEdit(postId, postEditor);
     }
 
     @DeleteMapping("/post/{postId}")

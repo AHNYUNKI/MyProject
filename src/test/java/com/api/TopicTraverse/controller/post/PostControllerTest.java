@@ -1,14 +1,12 @@
 package com.api.TopicTraverse.controller.post;
 
+import com.api.TopicTraverse.config.TopicTraversMocUser;
 import com.api.TopicTraverse.domain.post.Post;
 import com.api.TopicTraverse.repository.post.PostRepository;
-import com.api.TopicTraverse.request.PostEdit;
-import com.api.TopicTraverse.request.PostPage;
-import com.api.TopicTraverse.request.PostWrite;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.api.TopicTraverse.request.post.PostEditor;
+import com.api.TopicTraverse.request.post.PostPage;
+import com.api.TopicTraverse.request.post.PostWrite;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -50,6 +47,7 @@ class PostControllerTest {
     }
 
     @Test
+    @TopicTraversMocUser
     @DisplayName("Controller -> POST 보내기")
     public void test1() throws Exception {
         // given
@@ -93,6 +91,7 @@ class PostControllerTest {
     }
 
     @Test
+    @TopicTraversMocUser
     @DisplayName("제목을 작성하지 않으면 에러가 발생한다.")
     public void test3() throws Exception {
         // given
@@ -142,6 +141,7 @@ class PostControllerTest {
     }
 
     @Test
+    @TopicTraversMocUser
     @DisplayName("게시글 수정")
     public void test5() throws Exception {
         // given
@@ -152,7 +152,7 @@ class PostControllerTest {
 
         postRepository.save(post);
 
-        PostEdit postEdit = PostEdit.builder()
+        PostEditor postEditor = PostEditor.builder()
                 .title("제목_수정입니다.")
                 .content("내용_수정입니다.")
                 .build();
@@ -160,13 +160,14 @@ class PostControllerTest {
         // expect
         mockMvc.perform(patch("/post/{postId}",post.getId())
                 .contentType(APPLICATION_JSON)
-                .content((objectMapper.writeValueAsString(postEdit)))
+                .content((objectMapper.writeValueAsString(postEditor)))
         )
                 .andExpect(status().isOk())
                 .andDo(print());
     }
 
     @Test
+    @TopicTraversMocUser
     @DisplayName("게시글 삭제")
     public void test6() throws Exception {
         // given

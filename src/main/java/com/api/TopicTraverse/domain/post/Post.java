@@ -1,8 +1,7 @@
 package com.api.TopicTraverse.domain.post;
 
 import com.api.TopicTraverse.domain.BaseTime;
-import com.api.TopicTraverse.domain.member.Member;
-import com.api.TopicTraverse.request.PostEdit;
+import com.api.TopicTraverse.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,8 +27,8 @@ public class Post extends BaseTime {
     private int hit;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Builder
     public Post(Long id, String title, String content, int hit) {

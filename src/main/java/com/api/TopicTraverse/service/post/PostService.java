@@ -1,14 +1,17 @@
 package com.api.TopicTraverse.service.post;
 
 import com.api.TopicTraverse.domain.post.Post;
+import com.api.TopicTraverse.domain.user.User;
 import com.api.TopicTraverse.exception.PostNotFound;
+import com.api.TopicTraverse.repository.member.UserRepnsitory;
 import com.api.TopicTraverse.repository.post.PostRepository;
-import com.api.TopicTraverse.request.PostEdit;
-import com.api.TopicTraverse.request.PostPage;
-import com.api.TopicTraverse.request.PostWrite;
+import com.api.TopicTraverse.request.post.PostEditor;
+import com.api.TopicTraverse.request.post.PostPage;
+import com.api.TopicTraverse.request.post.PostWrite;
 import com.api.TopicTraverse.response.post.PostGet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +25,11 @@ public class PostService {
 
     private final PostRepository postRepository;
 
+    private final UserRepnsitory userRepnsitory;
+
     @Transactional
-    public void postCreate(PostWrite postWrite) {
+    public void postCreate(Long userId ,PostWrite postWrite) {
+        User user = userRepnsitory.findById(userId).orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다."));
 
         Post post = Post.builder()
                 .title(postWrite.getTitle())
@@ -36,7 +42,7 @@ public class PostService {
 
     public PostGet postGet(Long postId) {
 
-        Post post = postRepository.findById(postId).orElseThrow();
+        Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
 
         post.hitPlus();
 
@@ -55,10 +61,10 @@ public class PostService {
     }
 
     @Transactional
-    public void postEdit(Long postId, PostEdit postEdit) {
+    public void postEdit(Long postId, PostEditor postEditor) {
         Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
 
-        post.edit(postEdit.getTitle(), postEdit.getContent());
+        post.edit(postEditor.getTitle(), postEditor.getContent());
 
     }
 

@@ -1,17 +1,17 @@
-package com.api.TopicTraverse.request;
+package com.api.TopicTraverse.request.post;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class PostEdit {
+public class PostEditor {
 
     private final String title;
 
     private final String content;
 
     @Builder
-    public PostEdit(String title, String content) {
+    public PostEditor(String title, String content) {
         this.title = title;
         this.content = content;
     }
