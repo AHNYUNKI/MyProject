@@ -1,28 +1,36 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/myProject
-    username: root
-    password:
+  profiles:
+    #active:
+    #local {서버를 시작할 때 적용할 yml명}
+    group:
+      local-env:
+        - local
+      dev-env:
+        - dev
+      prod-env:
+        - prod
+        - spring:
+            config:
+              activate:
+                on-profile: dev
 
-#spring:
-#  datasource:
-#    driver-class-name: org.h2.Driver
-#    url: jdbc:h2:mem:project
-#    username: sa
-#    password:
-#  h2:
-#    console:
-#      path: /h2-console
-#      enabled: true
+            datasource:
+              driver-class-name: com.mysql.cj.jdbc.Driver
+              url: jdbc:mysql://b3f2.cxdxmana8mbl.ap-northeast-2.rds.amazonaws.com:3306/docker?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+              username: admin
+              password: 00000000
 
+            jpa:
+              open-in-view: true
+              hibernate:
+                ddl-auto: create
+                naming:
+                  physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+              properties:
+                hibernate:
+                  format_sql: true
+              defer-datasource-initialization: true
 
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-
-
+          logging:
+            level:
+              '[org.springframework.boot.web]': INFO

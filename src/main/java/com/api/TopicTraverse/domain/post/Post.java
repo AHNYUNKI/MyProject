@@ -2,12 +2,16 @@ package com.api.TopicTraverse.domain.post;
 
 import com.api.TopicTraverse.domain.BaseTime;
 import com.api.TopicTraverse.domain.user.User;
+import com.api.TopicTraverse.request.post.PostEditor;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.*;
 
@@ -47,8 +51,8 @@ public class Post extends BaseTime {
     }
 
 
-    public void edit(String title, String content) {
-        this.title = title;
-        this.content = content;
+    public void edit(PostEditor postEditor) {
+        this.title = postEditor.getTitle() != null ? postEditor.getTitle() : title;
+        this.content = postEditor.getContent() != null ? postEditor.getContent() : content;
     }
 }

@@ -64,7 +64,7 @@ public class PostService {
     public void postEdit(Long postId, PostEditor postEditor) {
         Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
 
-        post.edit(postEditor.getTitle(), postEditor.getContent());
+        post.edit(postEditor);
 
     }
 

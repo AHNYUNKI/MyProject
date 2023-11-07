@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  springboot:
+    container_name: spring-dev # ec2내에서 동작하는 컨테이너명
+    image: ahnyunki/docker-test:latest
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_PROFILES_ACTIVE : dev-env # 사용할 profile
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
