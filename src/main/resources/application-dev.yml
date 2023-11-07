@@ -1,0 +1,25 @@
+spring:
+    config:
+      activate:
+        on-profile: dev
+
+    datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://b3f2.cxdxmana8mbl.ap-northeast-2.rds.amazonaws.com:3306/docker?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      username: admin
+      password: 00000000
+
+    jpa:
+      open-in-view: true
+      hibernate:
+        ddl-auto: create
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      properties:
+        hibernate:
+          format_sql: true
+      defer-datasource-initialization: true
+
+logging:
+  level:
+    '[org.springframework.boot.web]': INFO
